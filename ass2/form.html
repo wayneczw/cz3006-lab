@@ -1,0 +1,159 @@
+<?xml version = "1.0"  encoding = "utf-8" ?>
+<!DOCTYPE html PUBLIC "-//w3c//DTD XHTML 1.0 Strict//EN"
+
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+    <head>
+        <title> CZ3006 Fruits Sales </title>
+        <script type = "text/javascript">
+            //function to compute total cost after quantity input
+            function total() {
+                var apple_count = document.getElementById("apple").value;
+                var orange_count = document.getElementById("orange").value;
+                var banana_count = document.getElementById("banana").value;
+                var total = apple_count * 0.69 + orange_count * 0.59 + banana_count * 0.39;
+                var total = total.toFixed(2); //rounds the total cost to 2 decimal points
+                
+                var flag = true;
+
+                //if input is NA or if input is not a number or if input < 0
+                if(isNaN(apple_count) || apple_count%1!=0 || apple_count<0){
+                    document.getElementById("cost").value = "NaN";
+                    document.getElementById("submit").disabled = true;
+                    alert("Please check your input for apples.");
+                    flag = false;
+                }
+                if(isNaN(orange_count) || orange_count%1!=0 || orange_count<0){
+                    document.getElementById("cost").value = "NaN";
+                    document.getElementById("submit").disabled = true;
+                    alert("Please check your input for oranges.");
+                    flag = false;
+                }
+                if(isNaN(banana_count) || banana_count%1!=0 || banana_count<0){
+                    document.getElementById("cost").value = "NaN";
+                    document.getElementById("submit").disabled = true;
+                    alert("IPlease check your input for banana.");
+                    flag = false;
+                }
+
+                if (flag){
+                    document.getElementById("cost").value = total;
+                
+                    document.getElementById("submit").disabled = false; //enables the submit button
+                }
+            }  //computeCost
+            
+            //validate all input details when click submit
+            function validateOrder() {
+                var apple_count = document.getElementById("apple").value;
+                var orange_count = document.getElementById("orange").value;
+                var banana_count = document.getElementById("banana").value;
+                var name = document.getElementById("name").value;
+                var cost= document.getElementById("cost").value;
+            
+                if(name==""){
+                    alert("Dear customer, please enter your name :)");   
+                    return false;
+                }
+                if((apple_count=="" && orange_count=="" && bananas=="") || (cost==0.00)){
+                    alert("Dear customer, please order at least 1 fruit.");        
+                    return false; 
+                }
+                //if input is NA or if input is not a number or if input < 0
+                if(isNaN(apple_count) || apple_count%1!=0 || apple_count<0){
+                    document.getElementById("cost").value = "NaN";
+                    alert("Dear customer, please check your input for apples.");
+                    return false;
+                }
+                if(isNaN(orange_count) || orange_count%1!=0 || orange_count<0){
+                    document.getElementById("cost").value = "NaN";
+                    alert("Dear customer, please check your input for oranges.");
+                    return false;
+                }
+                if(isNaN(banana_count) || banana_count%1!=0 || banana_count<0){
+                    document.getElementById("cost").value = "NaN";
+                    alert("Dear customer, please check your input for bananas.");
+                    return false;
+                }
+            }
+        </script>
+    </head>
+
+    <body>
+    <form action="./submit.php" method="post">
+        <h2> Welcome to CZ3006 Fruits Sales </h2>
+        <table>
+        <!-- Text widgets for the customer's name -->
+            <tr>
+                <td> Customer Name: </td>
+                <td> <input type="text" name="name" size="30" /> </td>
+            </tr>
+        </table>
+        <p />
+
+        <table border="border">
+        <!-- First, the column headings -->
+            <tr>
+                <th> Fruit </th>
+                <th> Price </th>
+                <th> Quantity </th>
+            </tr>
+        <!-- Now, the table data entries -->
+
+
+            <tr>
+                <td> Apple </td>
+                <td> $0.69 </td>
+                <td align="center">
+                    <input type="text" name="apple" id="apple" size="3" onchange="total()" />
+                </td>
+            </tr>
+
+            <tr>
+                <td> Orange </td>
+                <td> $0.59 </td>
+                <td align="center">
+                    <input type="text" name="orange" id="orange" size="3" onchange="total()" /> 
+                </td>
+            </tr>
+
+            <tr>
+                <td> Banana </td>
+                <td> $0.39 </td>
+                <td align="center">
+                    <input type="text" name="banana" id="banana" size="3" onchange="total()" />
+                </td>
+            </tr>
+        </table>
+        <p />
+
+        <!-- The text box showing the total cost of the user's order-->
+        <tr>
+            <th>  </th>
+            <td> Total Cost: </td>
+            <td align="right"> <input type="text"  size="5" id="cost" name="cost" placeholder="$0.00" onfocus="this.blur();" /> </td>
+        </tr>
+
+        <!-- The radio buttons for the payment method -->
+        <h3> Payment Method </h3>
+        <p>
+
+            <input type="radio" name="payment" id="visa" value="visa" checked="checked" /> 
+                Visa <br />
+            <input type="radio" name="payment" id="mastercard" value="mastercard" />
+                Master Card <br />
+            <input type="radio" name="payment" id="discover" value="discover" />
+                Discover <br /> <br />
+        </p>
+
+        <!-- The submit and reset buttons -->
+        <p>
+            <input type="submit" id="submit" value="Submit Order" onclick="return validateOrder()" disabled />
+            <input type="reset" value="Clear Order Form" />
+        </p>
+    </form>
+    </body>
+</html>
+
